@@ -4,4 +4,4 @@ I put these here because while it's almost certain that sketches like these have
 
 1. Seeed_Studio_XIAO_nRF52840_Sense_Test1: Exercise most of the sensors with data and visual displays.
 
-Written/modified by Samuel M. Goldwasser. Copyright® (if any) and additional details in the sketch headers.
+Written/modified by Samuel M. Goldwasser.  Copyright® (if any) and additional details in the sketch headers.
