@@ -1,4 +1,4 @@
-These are basic sketches for the [Seeed Studio XIAO nRF52840 Sense](https://www.seeedstudio.com/Seeed-XIAO-BLE-Sense-nRF52840-p-5253.html).
+These are basic sketches for the Seeed Studio XIAO nRF52840 Sense (https://www.seeedstudio.com/Seeed-XIAO-BLE-Sense-nRF52840-p-5253.html).
 
 I put these here because while it's almost certain that sketches like these have been out there for years, a Web search has real trouble finding them, especially with AI. ;-)
 
