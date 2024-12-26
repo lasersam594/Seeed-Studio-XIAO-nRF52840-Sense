@@ -5,7 +5,7 @@ finding them, especially with AI. ;-)
 
 1. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_Test1: Exercise most of the sensors with data and visual displays. (Coming soon.)
 2. Seeed_Studio_XIAO_nRF52840_Sense_RGB_LED_Color_via_Bluetooth1. (Coming soon.)
-3. Seeed_Studio_XIAO_nRF52840_Sense_Send_Gyro_Data_to_iPhone_Test1 (Coming soon.)
+3. Seeed_Studio_XIAO_nRF52840_Sense_Bluetooth_Send_Test1 (Coming soon.)
 
 "Coming soon" because waiting for USB-C cable!!
 
