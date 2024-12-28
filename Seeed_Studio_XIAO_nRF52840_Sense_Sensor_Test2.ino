@@ -58,7 +58,7 @@ float RollOffsetSum = 0;  // Temporary variables for Gyro AutoCal sums
 float PitchOffsetSum = 0;
 float YawOffsetSum = 0;
 
-float GR_COR = 0;         // Gyro offset correction values
+float GR_COR = 0;         // Gyro offset correction values if not using GyroAutoCal
 float GP_COR = 0;
 float GY_COR = 0;
 
@@ -121,8 +121,8 @@ void setup() {
   // Fixed calibration values may be needed if Gyro AutoCal is not enabled
   if (GyroAutoCal == 0) {
     GR_COR = 0; // Sample #1
-    GP_COR = -1.0;
-    GY_COR = 1.0;
+    GP_COR = 0;
+    GY_COR = 0;
   }
 
   // Serial port
@@ -255,11 +255,11 @@ void loop() {
     }
   }
 
-    ledr = fabs(gr) / 2;
-    ledp = fabs(gp) / 2;
-    ledy = fabs(gy) / 2;
+  ledr = fabs(gr - GR_COR) / 2;
+  ledp = fabs(gp - GP_COR) / 2;
+  ledy = fabs(gy - GY_COR) / 2;
 
-    if ((ledr > 8) || (ledp > 8) || (ledy > 8)) {
+    if ((ledr > 2) || (ledp > 8) || (ledy > 8)) {
       RGB_LED_Color(ledr, ledp, ledy);
       timeout = 16;
     }
