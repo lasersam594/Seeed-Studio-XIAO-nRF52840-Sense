@@ -11,14 +11,14 @@ a Web search.  Note that the primary difference between the Rev1 and Rev2 sketch
 Accelerometer (Gs) X, Y, Z; Gyroscope (Degs/s) Roll, Pitch, Yaw; and peak Mic values are all optionally sent via the serial
 port as data-only, or with labels.
 
-In addition, the on-board BUILTIN_LED, PWR_LED, and RGB_LED provide visual output:
+In addition, the on-board USER LED (the CHARGE led) and RGB LED provide visual output:
 
 1. Gyroscope: Displays the absolute value for Roll, Pitch, and Yaw as the brightness of each if the RGB leds.  Optional Gyro
    calibration to compensate for board-specific roll, pitch, and yaw offsets.  If enabled, XIAO must remain stationary at
    startup while the RGB LEDs are blinking.  The default duration is ~12 blinks.  This may only be not be needed.  TBD.
 2. Static Tilt (accelerometer Z value): Turns on the PWR_LED if more than approximately 45 degrees.
 4. Microphone: Displays the peak intensity of the audio on a color scale using the RGB leds only when Gyro is not active.
-5. Heartbeat: The Charge LED flashes at an approximately 1 Hz rate if there is no display activity.  TBD.
+5. Heartbeat: The USER LED flashes at an approximately 1 Hz rate if there is no display activity.
 
 Suggestions for (modest!) improvements welcome.
 
@@ -82,7 +82,7 @@ float pgr, pgp, pgy;
 #define RED 255, 0, 0
 #define WHITE 255, 255, 255
 
-#define timeoutvalue  17
+#define timeoutvalue  35
 #define skipcount 25
 
 #define LED_USER 17 // Defined as CHARGE LED on nRF board
@@ -196,7 +196,7 @@ void loop() {
 
     led = (az * 255);
     if (led < 180) nrf_gpio_pin_write(LED_USER, LOW);  // Turn on LED_PWR if tilt is more than ~45 degrees
-    else nrf_gpio_pin_write(LED_USER, HIGH);           // analogWrite(LED_PWR, led); // Using analogWrite hangs here, even with a cosntant???
+    else nrf_gpio_pin_write(LED_USER, HIGH);
 
   // Gyroscope
 
@@ -259,7 +259,7 @@ void loop() {
   ledp = fabs(gp - GP_COR) / 2;
   ledy = fabs(gy - GY_COR) / 2;
 
-    if ((ledr > 2) || (ledp > 8) || (ledy > 8)) {
+    if ((ledr > 8) || (ledp > 8) || (ledy > 8)) {
       RGB_LED_Color(ledr, ledp, ledy);
       timeout = 16;
     }
@@ -314,6 +314,16 @@ if ((GyroAutoCalFlag == 0) && (OtherSensorSkipFlag == 0)) { // Enable other sens
     }
  }   
   else if ((GyroAutoCalFlag == 0) && (OtherSensorSkipFlag == 1)) OtherSensorSkipFlag = 0; // Kludge to suppress partial data dump just after Gyro Autocal finished. ;-)
+
+// Heartbeat
+  count++;
+  if (count >= timeoutvalue) {
+    if ((ledr <= 8) && (ledp <= 8) && (ledy <= 8) && (sum < 25) && (timeout == 0)) {
+      nrf_gpio_pin_write(LED_USER,0);  // Pulse USER led
+      count = 0;
+    }
+  }
+  delay(timeoutvalue);
 }
 
 void RGB_LED_Color(int r, int g, int b) {
