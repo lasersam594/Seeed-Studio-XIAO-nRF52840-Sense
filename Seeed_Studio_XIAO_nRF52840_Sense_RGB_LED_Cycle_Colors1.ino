@@ -3,14 +3,15 @@ Seeed Studio XIAO nRF52840 Sense RGB Cycle Colors 1.
 
 Copyright® Samuel M. Goldwasser, 1994-2025, all rights reserved.
 
-This is sort of the fancy equivalent of Blink. ;-)  Cycles through a rainbow of colors in the RGB leds and toggles LED_BUILTIN,
-as well as LED_PWR, which many don't even realize can be controlled.
+This is sort of the fancy equivalent of Blink. ;-)  Cycles through a rainbow of colors in the RGB leds and toggles LED_CHARGE
+(renamed to LED_USER).  Having the code here for the latter is handy because it does not go to a normal digital pin, only
+the microprocessor pin GPIO P0.17, and a Web search can easily lead down a rabbit hole.
 
 If your first time using a Seed Studio XIAO nRF52840 Sense, install the necessary board in the Arduino IDE:
 
 1. Go to Tools > Board > Boards Manager or click the Boards icon, type the keyword "nrf" in the search box, install "Seeed
    nRF52 mbed-enabled Boards"
-2. Go to Tools > Board, and select "Seeed nRF mbed-enabled Boards > Seeed XIAO BLE Sense - nRF52840.
+2. Go to Tools > Board, and select: Seeed nRF mbed-enabled Boards > Seeed XIAO BLE Sense - nRF52840.
 3. Go to Tools > Port, and select the correct port.
 
 The sketch should then compile without errors (though there may be warnings that can be ignored).
@@ -33,16 +34,16 @@ The sketch should then compile without errors (though there may be warnings that
 bool state; // LED_USER on/off
 
 void setup() {
-  // initialize LEDs.
+  // initialize LEDs.  Note polarity of all LEDs is HIGH = OFF.
   nrf_gpio_cfg_output(LED_USER);
   pinMode(LEDR, OUTPUT);
   pinMode(LEDG, OUTPUT);
   pinMode(LEDB, OUTPUT);
 
   // Turn LED_USER off and set the RGB LEDs at low brightness before cycling colors
-  nrf_gpio_pin_write(LED_USER,0);
+  nrf_gpio_pin_write(LED_USER,1);
   RGB_LED_Color(GRAY);
-  delay(250); // Pause before cycling
+  delay(1000); // Pause before cycling
 }
 
 // Cycle through a rainbow (more or less) of colors in the RGB_LEDs and toggle LED_USER
@@ -50,7 +51,6 @@ void loop() {
   nrf_gpio_pin_write(LED_USER, state);
   state = !state;
   RGB_LED_Cycle_Colors();
-  delay(50);
 }
 
 void RGB_LED_Color(int r, int g, int b) {
