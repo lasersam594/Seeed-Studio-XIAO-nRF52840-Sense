@@ -1,12 +1,12 @@
 /*
 Seeed Studio XIAO nRF52840 Sense Sensor Test V2.
 
-Copyright® Samuel M. Goldwasser, 1994-2024, all rights reserved.  Permission is granted for public use or modification as
+Copyright® Samuel M. Goldwasser, 1994-2025, all rights reserved.  Permission is granted for public use or modification as
 long as the Copyright notice is included.
 
-This a simple utility to exercise most of the Nano BLE 33 Sense Rev1 or Rev2 sensors using the on-board LEDs and serial port.
-The required Nano BLE 33 libraries are all either built into the Arduino IDE or Arduino Cloud Editor, or readily found via
-a Web search.  Note that the primary difference between the Rev1 and Rev2 sketches are the libraries for the IMU and T/H.
+This a simple utility to exercise most of the Seeed Studio XIAO nRF52840 Sense sensors using the on-board LEDs and serial
+port.  The required Nano BLE 33 libraries are all either built into the Arduino IDE or Arduino Cloud Editor, or readily
+found via a Web search.  The primary difference between the Rev1 and Rev2 sketches are the libraries for the IMU and T/H.
 
 Accelerometer (Gs) X, Y, Z; Gyroscope (Degs/s) Roll, Pitch, Yaw; and peak Mic values are all optionally sent via the serial
 port as data-only, or with labels.
@@ -25,22 +25,21 @@ Suggestions for (modest!) improvements welcome.
 To install the necessary board and libraries in the Arduino IDE:
 
 1. Go to File > Preferences, and fill "Additional Boards Manager URLs" with:
-   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json (on a separate line if there
-   are others there already).
+   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json (on a separate line if there are others
+   there already).
 2. Go to Tools > Board > Boards Manager..., type the keyword "seeed nrf52" in the search box, select the latest version
    of the board you want, and install it.  These will appear: "Seeed nRF52 Boards" and "Seeed nRF52 mbed-enabled Boards".
    You can install both, though using only "Seeed nRF52 mbed-enabled Boards" seems to compile with fewer warnings.
-3. Download the Seeed_Arduino_LSM6DS3 library from: https://github.com/Seeed-Studio/Seeed_Arduino_LSM6DS3/tree/master.
+3. Download the Seeed Arduino LSM6DS3 library from: https://github.com/Seeed-Studio/Seeed_Arduino_LSM6DS3/tree/master.
    Go to Sketch > Include Library > Add Zip Library, and point to the file downloaded above.
 4. Go to Tools > Board, and select "Seeed XIAO nRF52840 Sense".
+5. Go to Tools > Port, and select the correct port.
+6. Also select the data formatting and Gyro AutoCal options in the #defines, below.
 
 This sketch should then compile without errors.  Whether it will run remains to be seen. ;-)
 
 Reference: https://github.com/Seeed-Studio/wiki-documents/blob/docusaurus-version/docs/Sensor/SeeedStudio_XIAO/SeeedStudio_XIAO_nRF52840-Sense/XIAO_BLE.md
 */
-
-// Sketch version number for banner. ;-)
-#define Version 2
 
 // User parameters
 #define data1 1           // Sends data to serial port if 1, LEDs-only on Nano if 0
@@ -49,6 +48,9 @@ Reference: https://github.com/Seeed-Studio/wiki-documents/blob/docusaurus-versio
 #define GyroAutoCal 1     // Perform automatic Gyro offset compensation at startup: The board must be stationary
                           // while the LEDs are blinking.  If not enabled, use #define GR/GP/GY_COR values.
                           //  If enabled, at start
+
+// Sketch version number for banner. ;-)
+#define Version 2
 
 // Gyro offset parameters and variables
 #define CalValues 50      // Number of Gyro samples to average for calibration
