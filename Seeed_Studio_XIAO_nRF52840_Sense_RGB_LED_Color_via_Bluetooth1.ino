@@ -7,10 +7,9 @@
 
   Tested using the LightBlue iPhone App.  Compile the sketch and the RGB LEDs will cycle through a
   rainbow of colors just to show off.  Then, using LightBlue, touch "Connect" when Arduino comes up.
-  The LED_BUILTIN (yellow) the should come and the LED_PWR (green) should go off indicating that the
-  Nano has connected and the RGB LEDs will go to black.  Select the ">" next to "Properties: Read,
-  Write" under Device Information.  To set a specific color, touch "Write new value" and enter a HEX
-  number from 1 to B.  Back up to the Peripheral selection screen to disconnect.  Yes, this gets
+  The USER LED (Charge, green) should come on and the RGB LEDs will go to black.  Select the ">" next
+  to "Properties: Read, Write" under Device Information.  To set a specific color, touch "Write new
+  value" and enter a HEX number from 0 to B.  Back up to the Peripheral selection screen to disconnect.  Yes, this gets
   rather boring rather quickly, but it should be painless. ;-)
 
   Modified from original by Samuel M. Goldwasser, no copyright® by me, do with it as you see fit. ;-)
@@ -121,7 +120,6 @@ void RGB_LED_Color(int r, int g, int b) {
 }
 
 void RGB_LED_Cycle_Colors() {
-  RGB_LED_Color(BLACK); delay(50);
   RGB_LED_Color(GRAY); delay(50);
   RGB_LED_Color(MAGENTA); delay(50);
   RGB_LED_Color(BLUE); delay(50);
@@ -137,4 +135,5 @@ void RGB_LED_Cycle_Colors() {
   RGB_LED_Color(BLUE); delay(50);
   RGB_LED_Color(MAGENTA); delay(50);
   RGB_LED_Color(GRAY); delay(50);
-}
+  RGB_LED_Color(BLACK); delay(50);
+  }
