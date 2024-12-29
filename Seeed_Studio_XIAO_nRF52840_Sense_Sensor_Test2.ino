@@ -168,9 +168,9 @@ void setup() {
     Serial.println("  - Gyro angle in degrees/second. LED threshold 25.");
     Serial.println("  - Peak soundlevel in arbitrary units.");
     Serial.println();
-    delay(2000);
     Serial.println("Data:");
     Serial.println("");
+    if (GyroAutoCal == 0) delay(2000);
   }
 }
 
@@ -242,12 +242,14 @@ void loop() {
         PitchOffsetSum = 0;
         YawOffsetSum = 0;
       } 
-      if ((CalCount & 3) == 2) RGB_LED_Color(GRAY); // Heartbeat while AutoCal in progress
-      else RGB_LED_Color(BLACK);
-      RollOffsetSum += gr;
-      PitchOffsetSum += gp;
-      YawOffsetSum += gy;
-      CalCount--;
+      else {
+        RollOffsetSum += gr; // Update sums
+        PitchOffsetSum += gp;
+        YawOffsetSum += gy;
+        if ((CalCount & 3) == 2) RGB_LED_Color(GRAY); // Heartbeat while AutoCal in progress
+        else RGB_LED_Color(BLACK);
+        CalCount--;
+      }
     }
     else if (CalCount == 1) { // Compute average offsets
       GR_COR = RollOffsetSum / CalValues;
