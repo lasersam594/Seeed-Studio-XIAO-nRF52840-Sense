@@ -25,12 +25,12 @@ Suggestions for (modest!) improvements welcome.
 To install the necessary board and libraries in the Arduino IDE:
 
 1. Go to File > Preferences, and fill "Additional Boards Manager URLs" with:
-    https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json (on a separate line if there
+   https://files.seeedstudio.com/arduino/package_seeeduino_boards_index.json (on a separate line if there
    are others there already).
 2. Go to Tools > Board > Boards Manager..., type the keyword "seeed nrf52" in the search box, select the latest version
    of the board you want, and install it.  These will appear: "Seeed nRF52 Boards" and "Seeed nRF52 mbed-enabled Boards".
    You can install both, though using only "Seeed nRF52 mbed-enabled Boards" seems to compile with fewer warnings.
-3. Download the LSM605 IMU library as a zip file from: https://github.com/Seeed-Studio/Seeed_Arduino_LSM6DS3/tree/master.
+3. Download the Seeed_Arduino_LSM6DS3 library from: https://github.com/Seeed-Studio/Seeed_Arduino_LSM6DS3/tree/master.
    Go to Sketch > Include Library > Add Zip Library, and point to the file downloaded above.
 4. Go to Tools > Board, and select "Seeed XIAO nRF52840 Sense".
 
@@ -108,7 +108,16 @@ int led, ledr, ledp, ledy;
 
 void setup() {
 
-  // Initialize LEDs.  Note polarity of all LEDs is HIGH = OFF.
+  if (GyroAutoCal == 1) GyroAutoCalFlag = 1; // Disables other sensors and all sensor data to serial port until Gyro Autocal is complete
+
+  // Fixed calibration values may be needed if Gyro AutoCal is not enabled
+  if (GyroAutoCal == 0) {
+    GR_COR = 0; // Sample #1
+    GP_COR = 0;
+    GY_COR = 0;
+  }
+
+ // Initialize LEDs.  Note polarity of all LEDs is HIGH = OFF.
   nrf_gpio_cfg_output(LED_USER);
   pinMode(LEDR, OUTPUT);
   pinMode(LEDG, OUTPUT);
@@ -117,13 +126,6 @@ void setup() {
   // Turn the LED_USER on and set the RGB LEDs at low brightness.
   nrf_gpio_pin_write(LED_USER,0);
   RGB_LED_Color(GRAY);
-
-  // Fixed calibration values may be needed if Gyro AutoCal is not enabled
-  if (GyroAutoCal == 0) {
-    GR_COR = 0; // Sample #1
-    GP_COR = 0;
-    GY_COR = 0;
-  }
 
   // Serial port
   if (data1 == 1) {
@@ -172,16 +174,17 @@ void setup() {
 
 void loop() {
 
-    char buffer[40];
-    int led, ledr, ledp, ledy;
-    int diag = 0;
+  char buffer[40];
+  int led, ledr, ledp, ledy;
+  int diag = 0;
 
-    // read the acceleration data
-    ax = myIMU.readFloatAccelX();
-    ay = myIMU.readFloatAccelY();
-    az = myIMU.readFloatAccelZ();
+  // read the acceleration data
+  ax = myIMU.readFloatAccelX();
+  ay = myIMU.readFloatAccelY();
+  az = myIMU.readFloatAccelZ();
  
-   if (data1 == 1) {
+  if (GyroAutoCalFlag == 0) { // Enable only if GyroAutocal in NOT in progress
+    if (data1 == 1) {
       if (verbose1 == 1) Serial.print("  Axl (Gs) X: ");
       sprintf(buffer, "%5.2f", ax);
       Serial.print(buffer);
@@ -193,7 +196,7 @@ void loop() {
       Serial.print(buffer);
       if (verbose1 == 1) Serial.print(" | ");
     }
-
+  }
     led = (az * 255);
     if (led < 180) nrf_gpio_pin_write(LED_USER, LOW);  // Turn on LED_PWR if tilt is more than ~45 degrees
     else nrf_gpio_pin_write(LED_USER, HIGH);
@@ -229,7 +232,7 @@ void loop() {
        CalCount--;          // Skip corrupted first value
     }
     else if (CalCount > 1) {
-      delay(20);
+      delay(1);
       loopcount = skipcount - 2;
       if (((fabs(gr - pgr) > 8)) || ((fabs(gp - pgp) > 8)) || ((fabs(gr - pgr) > 8))) { // Start over if too much gyro activity
         CalCount = CalValues;
@@ -265,7 +268,7 @@ void loop() {
     }
     else if (timeout > 0) timeout--;
 
-if ((GyroAutoCalFlag == 0) && (OtherSensorSkipFlag == 0)) { // Enable other sensors if GyroAutocal NOT in progress AND if just ended
+  if ((GyroAutoCalFlag == 0) && (OtherSensorSkipFlag == 0)) { // Enable other sensors if GyroAutocal NOT in progress AND if just ended
 
     // Microphone
 
