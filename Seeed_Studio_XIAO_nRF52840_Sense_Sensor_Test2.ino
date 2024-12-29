@@ -102,8 +102,8 @@ int i = 0;
 int timeout = 0;
 int sum = 0;
 
-short sampleBuffer[1024];   // buffer to read audio samples into, each sample is 16-bits
-volatile int samplesRead;   // number of samples read
+short sampleBuffer[1024];       // buffer to read audio samples into, each sample is 16-bits
+volatile int samplesRead = 0;   // number of samples read
 
 float ax, ay, az, gr, gp, gy;
 int led, ledr, ledp, ledy;
@@ -296,10 +296,7 @@ void loop() {
         else if (sum >= 0) RGB_LED_Color(BLACK);
       }
       if (sum >= 25) timeout = timeoutvalue * 2;
- 
-      // clear the read count
-      samplesRead = 0;  // Clear sample buffer
-    }
+     }
 
     if (data1 == 1) {
       if (verbose1 == 1) Serial.print(" | Mic: ");
@@ -317,7 +314,7 @@ void loop() {
         Serial.println("");
       }
     }
- }   
+  }   
   else if ((GyroAutoCalFlag == 0) && (OtherSensorSkipFlag == 1)) OtherSensorSkipFlag = 0; // Kludge to suppress partial data dump just after Gyro Autocal finished. ;-)
 
 // Heartbeat
@@ -328,6 +325,7 @@ void loop() {
       count = 0;
     }
   }
+  samplesRead = 0;  // Clear microphone sample buffer
   delay(timeoutvalue);
 }
 
