@@ -51,7 +51,7 @@
                           //  If enabled, at start
 
 // Sketch version number for banner. ;-)
-#define Version 3
+#define Version 5
 
 // Gyro offset parameters and variables
 #define CalValues 50      // Number of Gyro samples to average for calibration
@@ -214,10 +214,10 @@ void loop() {
     if (verbose1 == 1) Serial.print("Gyro (Degs/s) R: ");
     sprintf(buffer, "%8.2f", grcor);
     Serial.print(buffer);
-    if (verbose1 == 1) Serial.print("  P: ");
+    if (verbose1 == 1) Serial.print(" P: ");
     sprintf(buffer, "%8.2f", gpcor);
     Serial.print(buffer);
-    if (verbose1 == 1) Serial.print("  Y: ");
+    if (verbose1 == 1) Serial.print(" Y: ");
     sprintf(buffer, "%8.2f", gycor);
     Serial.print(buffer);
     if (verbose1 == 1) Serial.print(" ");
@@ -252,7 +252,7 @@ void loop() {
   }
 
   if (data1 == 1) {
-    if (verbose1 == 1) Serial.print(" | Mic: ");
+    if (verbose1 == 1) Serial.print("| Mic: ");
     sprintf(buffer, "%4d", sum);
     Serial.print(buffer);
     if (senddiag1 == 0) Serial.println("");
@@ -284,7 +284,7 @@ void RGB_LED_Color(int r, int g, int b, float intensity) {
     analogWrite(LEDR, (255 - (r * intensity)));
     analogWrite(LEDG, (255 - (g * intensity)));
     analogWrite(LEDB, (255 - (b * intensity)));
-  }
+}
 
 void onPDMdata() {
   // query the number of bytes available
