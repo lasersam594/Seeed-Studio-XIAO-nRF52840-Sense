@@ -1,5 +1,5 @@
 /*
-  Seeed Studio XIAO nRF52840 Sense Sensor Test V3.
+  Seeed Studio XIAO nRF52840 Sense Sensor Test V5.
 
   Copyright® Samuel M. Goldwasser, 1994-2025, all rights reserved.  Permission is granted for public use or modification as
   long as the Copyright notice is included.
