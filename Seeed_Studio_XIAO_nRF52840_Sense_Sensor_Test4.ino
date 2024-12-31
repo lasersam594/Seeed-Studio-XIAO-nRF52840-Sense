@@ -222,43 +222,7 @@ void loop() {
     if (verbose1 == 1) Serial.print(" ");
   }
 
-  // Generate colors for Gyro activity.  Note this color scale differs subtly from the one used for the microphone.
-  if ((fabs(grcor) / 2 > 8) || ((fabs(gpcor) / 2) > 8) || ((fabs(gycor) / 2) > 8)) {
-    if (grcor > 0) {
-      ledr =  ((grcor * 255)/255); // Add in RED
-      ledg =   (grcor * 0); 
-      ledb =   (grcor * 0);
-    }
-    else {                         // Add in CYAN
-      ledr =  -(grcor * 0);
-      ledg = -((grcor * 180)/255);
-      ledb = -((grcor * 75)/255);
-    }
-    if (gpcor > 0) {               // Add in GREEN
-      ledr +=  (gpcor * 0);
-      ledg += ((gpcor * 255)/255);
-      ledb +=  (gpcor * 0);
-    }
-    else {                         // Add in MAGENTA
-      ledr -= ((gpcor * 127)/255);
-      ledg -=  (gpcor * 0);
-      ledb -= ((gpcor * 127)/255);
-    }
-    if (gycor > 0) {               // Add in BLUE
-      ledr +=  (gycor * 0);
-      ledg +=  (gycor * 0);
-      ledb += ((gycor * 255)/255);
-      }
-    else {                         // Add in YELLOW
-      ledr -= ((gycor * 127)/255);
-      ledg -= ((gycor * 127)/255);
-      ledb -=  (gycor * 0);
-    }
-
-    RGB_LED_Color(ledr, ledg, ledb);
-    timeout = 16;
-  }
-  else if (timeout > 0) timeout--;
+  RGB_Gyro_Colors(grcor, gpcor, gycor);
 
   // Microphone
 
@@ -367,4 +331,44 @@ void Do_GyroAutoCal (int Delay) {
       RGB_LED_Color(BLACK);
     }
   }
+}
+
+void RGB_Gyro_Colors(float roll, float pitch, float yaw) {
+  // Generate colors for Gyro activity.  Note this color scale differs subtly from the one used for the microphone.
+  if ((fabs(roll) / 2 > 8) || ((fabs(pitch) / 2) > 8) || ((fabs(yaw) / 2) > 8)) { // Update if above threahold
+    if (roll > 0) {                // Add in RED
+      ledr =  ((roll * 255)/255);
+      ledg =   (roll * 0); 
+      ledb =   (roll * 0);
+    }
+    else {                         // Add in CYAN
+      ledr =  -(roll * 0);
+      ledg = -((roll * 180)/255);
+      ledb = -((roll * 75)/255);
+    }
+    if (pitch > 0) {               // Add in GREEN
+      ledr +=  (pitch * 0);
+      ledg += ((pitch * 255)/255);
+      ledb +=  (pitch * 0);
+    }
+    else {                         // Add in MAGENTA
+      ledr -= ((pitch * 127)/255);
+      ledg -=  (pitch * 0);
+      ledb -= ((pitch * 127)/255);
+    }
+    if (yaw > 0) {               // Add in BLUE
+      ledr +=  (yaw * 0);
+      ledg +=  (yaw * 0);
+      ledb += ((yaw * 255)/255);
+      }
+    else {                         // Add in YELLOW
+      ledr -= ((yaw * 127)/255);
+      ledg -= ((yaw * 127)/255);
+      ledb -=  (yaw * 0);
+    }
+
+    RGB_LED_Color(ledr, ledg, ledb);
+    timeout = 16;
+  }
+  else if (timeout > 0) timeout--;
 }
