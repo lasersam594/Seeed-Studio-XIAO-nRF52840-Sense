@@ -81,22 +81,21 @@ float pgr, pgp, pgy;
 #define RED 255, 0, 0
 #define WHITE 255, 255, 255
 
-#define timeoutvalue  30
+#define timeoutvalue 30
+#define scale 4
 
-#define LED_USER 17 // Defined as CHARGE LED on nRF board
+#define LED_USER 17   // Defined as CHARGE LED on nRF board
 
 #include <Arduino.h>
 #include <LSM6DS3.h>  // IMU
 
-//Create a instance of class LSM6DS3
-LSM6DS3 myIMU(I2C_MODE, 0x6A);    //I2C device address 0x6A
+//Create an instance of class LSM6DS3
+LSM6DS3 myIMU(I2C_MODE, 0x6A); //I2C device address 0x6A
 
 #include <PDM.h>      // Microphone
 
 int count = 0;
-int i = 0;
 int timeout = 0;
-int sum = 0;
 
 short sampleBuffer[1024];       // buffer to read audio samples into, each sample is 16-bits
 volatile int samplesRead = 0;   // number of samples read
@@ -226,11 +225,11 @@ void loop() {
 
   // Microphone
 
+  int sum = 0;
+  int i = 0;
+
   // wait for samples to be read
   if (samplesRead) {
-    int i = 0;
-    sum = 0;
-
     for (i = 0; i < samplesRead; i++)
       if (fabs(sampleBuffer[i]) > sum) sum = fabs(sampleBuffer[i]);  // Peak detect
 
@@ -366,6 +365,11 @@ void RGB_Gyro_Colors(float roll, float pitch, float yaw) {
       ledg -= ((yaw * 127)/255);
       ledb -=  (yaw * 0);
     }
+
+    // Color amplitude scaling
+    ledr /= scale;
+    ledg /= scale;
+    ledb /= scale;
 
     RGB_LED_Color(ledr, ledg, ledb);
     timeout = 16;
