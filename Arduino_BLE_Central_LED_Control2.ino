@@ -19,7 +19,7 @@
 
 #define serial 1 // Send to serial port if set to 1
 
-// #define nRF52840 // If defined, use nRF52840 CHARGE LED (PIO P0.17) as USER LED.  Comment out otherwise.
+#define nRF52840 // If defined, use nRF52840 CHARGE LED (PIO P0.17) as USER LED.  Comment out otherwise.
 
 #ifndef nRF52840
   #define LED_USER LED_BUILTIN 

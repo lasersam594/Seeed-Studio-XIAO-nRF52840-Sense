@@ -20,7 +20,7 @@
 
 #define serial 0 // Send to serial port if 1.  Set to 0 for a remote peripheral NOT on USB.
 
-// #define nRF52840 // If defined, use nRF52840 CHARGE LED (PIO P0.17) as USER LED.  Comment out otherwise.
+#define nRF52840 // If defined, use nRF52840 CHARGE LED (PIO P0.17) as USER LED.  Comment out otherwise.
 
 #ifndef nRF52840
   #define LED_USER LED_BUILTIN 
