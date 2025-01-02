@@ -9,5 +9,7 @@ finding them, especially with AI. ;-)
 3. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_Test5: Exercise the sensors with data and visual displays.
 4. Seeed_Studio_XIAO_nRF52840_Sense_RGB_LED_Color_via_Bluetooth1.
 5. Seeed_Studio_XIAO_nRF52840_Sense_Bluetooth_Send_Test2.  Send Gyro data to iOS device via Bluetooth
+6. Arduino_BLE_Central_LED_Control2 and Arduino_BLE_Peripheral_LED_Control2: Mating pair to show example of Bluetooth
+   data transfer between boards.
 
 Written/modified by Samuel M. Goldwasser.  Copyright® (if any) 1994-2025 and additional details in the sketch headers.
