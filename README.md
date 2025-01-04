@@ -11,7 +11,7 @@ finding them, especially with AI. ;-)
 5. Seeed_Studio_XIAO_nRF52840_Sense_Bluetooth_Send_Test2.  Send Gyro data to iOS device via Bluetooth
 6. Arduino_BLE_Central_LED_Control2 and Arduino_BLE_Peripheral_LED_Control2: Mating pair to show example of Bluetooth
    data transfer between boards.
-7. Bluetooth_Send_Gyro_Data5.ino and Bluetooth_Receive_Gyro_Data7.ino: Mating pair to show perhaps
+7. Bluetooth_Send_Gyro_Data6.ino and Bluetooth_Receive_Gyro_Data8.ino: Mating pair to show perhaps
    useful exmaple of gyroscope data transfer betweeb boards,
 
 Written/modified by Samuel M. Goldwasser.  Copyright® (if any) 1994-2025 and additional details in the sketch headers.
