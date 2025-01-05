@@ -2,6 +2,8 @@ These are basic sketches for the Seeed Studio XIAO nRF52840 Sense (https://www.s
 Some of these will work with other nRF52840 boards as well as the Arduino Nano 33 BLE Sense Rev1 and Rev2, and others.  One or two #defines
 near the top of the sketches may need to be enabled/disabled for specific board types.
 
+Note that not all combinations of boards have been tested with these sketches.  Please contact me if there are problems.
+
 I put these here because while it's almost certain that sketches like these have been out there for years, a Web search has real trouble
 finding them, especially with AI. ;-)
 
