@@ -1,6 +1,6 @@
 These are basic sketches for the Seeed Studio XIAO nRF52840 Sense (https://www.seeedstudio.com/Seeed-XIAO-BLE-Sense-nRF52840-p-5253.html).
 Some of these will work with other nRF52840 boards as well as the Arduino Nano 33 BLE Sense Rev1 and Rev2, and others.  One or two #defines
-near to of sketches may need to be enabled/disabled for specific board types.
+near the top of the sketches may need to be enabled/disabled for specific board types.
 
 I put these here because while it's almost certain that sketches like these have been out there for years, a Web search has real trouble
 finding them, especially with AI. ;-)
@@ -13,6 +13,6 @@ finding them, especially with AI. ;-)
 6. Arduino_BLE_Central_LED_Control2 and Arduino_BLE_Peripheral_LED_Control2: Mating pair to show example of Bluetooth
    data transfer between boards.
 7. Bluetooth_Send_Gyro_Data6.ino and Bluetooth_Receive_Gyro_Data8.ino: Mating pair to show perhaps
-   semi-useful exmaple of gyroscope data transfer between boards.
+   semi-useful exmaple of wireless gyroscope data transfer between boards.
 
 Written/modified by Samuel M. Goldwasser.  Copyright® (if any) 1994-2025 and additional details in the sketch headers.
