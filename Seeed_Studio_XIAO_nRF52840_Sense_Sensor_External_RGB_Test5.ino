@@ -300,17 +300,13 @@ void loop() {
 }
 
 void RGB_LED_Color(int r, int g, int b, float intensity) {
-//    analogWrite(LEDR, (255 - (r * intensity)));
-//    analogWrite(LEDG, (255 - (g * intensity)));
-//    analogWrite(LEDB, (255 - (b * intensity)));
-
-    digitalWrite(LEDR, 255-r);
-    digitalWrite(LEDG, 255-g);
-    digitalWrite(LEDB, 255-b);
-
-    analogWrite(D0, (255 - (r * intensity)));
+    analogWrite(D0, (255 - (r * intensity)));  // Drive for external RGB common-anode LEDs.
     analogWrite(D1, (255 - (g * intensity)));
     analogWrite(D2, (255 - (b * intensity)));
+
+    digitalWrite(LEDR, 255-r);                 // Only eight levels for built-in RGB LEDs since not enough PWM pins available.
+    digitalWrite(LEDG, 255-g);
+    digitalWrite(LEDB, 255-b);
 }
 
 void onPDMdata() {
