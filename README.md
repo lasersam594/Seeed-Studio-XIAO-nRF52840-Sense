@@ -10,11 +10,12 @@ finding them, especially with AI. ;-)
 1. Seeed_Studio_XIAO_nRF52840_Blink1: Blink example sketch modified to work with these boards.
 2. Seeed_Studio_XIAO_nRF52840_Sense_RGB_Cycle_Colors1: Fancy colorful version of Blink for boards with the RGB LEDs. ;-)
 3. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_Test5: Exercise the sensors with data and visual displays.
-4. Seeed_Studio_XIAO_nRF52840_Sense_RGB_LED_Color_via_Bluetooth1.
-5. Seeed_Studio_XIAO_nRF52840_Sense_Bluetooth_Send_Test2.  Send Gyro data to iOS device via Bluetooth
-6. Arduino_BLE_Central_LED_Control2 and Arduino_BLE_Peripheral_LED_Control2: Mating pair to show example of Bluetooth
+4. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_External_RGB_Test5: Same as above but uses external RGB LEDs on D0-D2.
+5. Seeed_Studio_XIAO_nRF52840_Sense_RGB_LED_Color_via_Bluetooth1.
+6. Seeed_Studio_XIAO_nRF52840_Sense_Bluetooth_Send_Test2.  Send Gyro data to iOS device via Bluetooth
+7. Arduino_BLE_Central_LED_Control2 and Arduino_BLE_Peripheral_LED_Control2: Mating pair to show example of Bluetooth
    data transfer between boards.
-7. Bluetooth_Send_Gyro_Data7.ino and Bluetooth_Receive_Gyro_Data9.ino: Mating pair to show perhaps
+8. Bluetooth_Send_Gyro_Data7.ino and Bluetooth_Receive_Gyro_Data9.ino: Mating pair to show perhaps
    semi-useful exmaple of Bluetooth gyroscope data transfer between boards.
 
 Written/modified by Samuel M. Goldwasser.  Copyright® (if any) 1994-2025 and additional details in the sketch headers.
