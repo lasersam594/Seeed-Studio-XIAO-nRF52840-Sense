@@ -23,14 +23,14 @@
   4. Microphone: Displays the peak intensity of the audio on a color scale using the RGB leds only when Gyro is not active.
   5. Heartbeat: The USER LED flashes at an approximately 1 Hz rate if there is no display activity.
 
-  This one has the RGB outputs going to D0, D1, and D2 instead of the on-board RGB LED to be used as a REAL lamp driver.
-  Like the built-in LEDs, it also assumes common anode LEDs, but full off is 0 and full on is 255.  It can drive an RGB
-  LED directly using the VUSB (+5 V) and a 120 ohm current limiting resistor in series with a 1N4148 diode to assure that
-  the voltage on D0 for the red LED is never greater than 3.3 V.  Although damage is unlikely without it, there may be some
-  leakage current resulting in the red LED never totally going dark.  And if you want to live dangerously, use 100 ohms for
-  slightly higher brightness but that may result in the peak LED current slightly exceeding the maximum 15 mA spec for the
-  digital pins.  This scheme was tested using an RGB common-anode LED probably a closeout from MPPA which are very comomon
-  on eBay now.  With external drivers, the sky is the limit. ;-)
+  This one has the option (#define EXT_LED) for the RGB outputs to go to D0-D2 instead of the on-board RGB LED to be used
+  as a REAL lamp driver.  Like the built-in LEDs, it also assumes common anode LEDs, but full off is 0 and full on is 255.
+  This can be flipped using #define INV_LED  It can drive an RGB LED directly using the VUSB (+5 V) and a 120 ohm current
+  limiting resistor in series with a 1N4148 diode to assure that the voltage on D0 for the red LED is never greater than 3.3 V.
+  Although damage is unlikely without it, there may be some leakage current resulting in the red LED never totally going dark.
+  And if you want to live dangerously, use 100 ohms for slightly higher brightness but that may result in the peak LED current
+  slightly exceeding the maximum 15 mA spec for the digital pins.  This scheme was tested using an RGB common-anode LED
+  probably a closeout from MPPA which are very comomon on eBay now.  With external drivers, the sky is the limit. ;-)
 
   Note: There are only 4 total PWM drivers on the XIAO board, not enough for all the built-in RGB LEDs to also be active.  If
   more than 4 digital pins are driven with analogWrite, the thing may crash and require a double click reset to be able
@@ -83,6 +83,11 @@ int Ver = Version;
 
 int CalCount = CalValues;
 float pgr, pgp, pgy;
+
+// LEDs
+
+#define EXT_LED // Use D0, D1, D2 instead of LEDR, LEDG, LEDB
+#define INV_LED // 0->On, 255->Off
 
 // Color palette for Gyro motion and audio in RGB_LEDs
 #define BLACK 0, 0, 0
@@ -300,17 +305,31 @@ void loop() {
 }
 
 void RGB_LED_Color(int r, int g, int b, float intensity) {
-//    analogWrite(D0, (255 - (r * intensity)));  // Drive for external RGB common-anode LEDs directly - full on is 0.
-//    analogWrite(D1, (255 - (g * intensity)));
-//    analogWrite(D2, (255 - (b * intensity)));
-
-    analogWrite(D0, (r * intensity));  // Drive for external RGB common-anode LEDs via driver - full on is 255.
-    analogWrite(D1, (g * intensity));
-    analogWrite(D2, (b * intensity));
-
-    digitalWrite(LEDR, 255-r);                 // Only eight levels for built-in RGB LEDs since not enough PWM pins available.
+  #ifdef EXT_LED
+    digitalWrite(LEDR, 255-r);                   // Only eight levels for built-in RGB LEDs since not enough PWM pins available.
     digitalWrite(LEDG, 255-g);
     digitalWrite(LEDB, 255-b);
+
+    #ifdef INV_LED
+      analogWrite(D0, (255 - (r * intensity)));  // Drive for external RGB common-anode LEDs directly - full on is 0.
+      analogWrite(D1, (255 - (g * intensity)));
+      analogWrite(D2, (255 - (b * intensity)));
+    #else
+      analogWrite(D0, (r * intensity));          // Drive for external RGB common-anode LEDs via driver - full on is 255.
+      analogWrite(D1, (g * intensity));
+      analogWrite(D2, (b * intensity));
+    #endif
+  #else                                            // Internal RGB LEDs
+    #ifndef INV_LED
+      analogWrite(LEDR, (255 - (r * intensity)));  // Normal: Full on is 0.
+      analogWrite(LEDG, (255 - (g * intensity)));
+      analogWrite(LEDB, (255 - (b * intensity)));
+    #else
+      analogWrite(LEDR, (r * intensity));          // Invert: full on is 255.
+      analogWrite(LEDG, (g * intensity));
+      analogWrite(LEDB, (b * intensity));
+    #endif
+  #endif
 }
 
 void onPDMdata() {
