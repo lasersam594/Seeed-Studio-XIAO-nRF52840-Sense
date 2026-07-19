@@ -9,8 +9,8 @@ finding them, especially with AI. ;-)
 
 1. Seeed_Studio_XIAO_nRF52840_Blink1: Blink example sketch modified to work with these boards.
 2. Seeed_Studio_XIAO_nRF52840_Sense_RGB_Cycle_Colors1: Fancy colorful version of Blink for boards with the RGB LEDs. ;-)
-3. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_Test5: Exercise the sensors with data and visual displays.
-4. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_External_RGB_Test5: Similar to above but uses external RGB LEDs on D0-D2.
+3. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_Test5: Exercise the sensors with data and visual displays.  Use the next one instead. ;-)
+4. Seeed_Studio_XIAO_nRF52840_Sense_Sensor_External_RGB_Test5: Similar to above but adds options for external RGB LEDs on D0-D2.
 5. Seeed_Studio_XIAO_nRF52840_Sense_RGB_LED_Color_via_Bluetooth1.
 6. Seeed_Studio_XIAO_nRF52840_Sense_Bluetooth_Send_Test2.  Send Gyro data to iOS device via Bluetooth
 7. Arduino_BLE_Central_LED_Control2 and Arduino_BLE_Peripheral_LED_Control2: Mating pair to show example of Bluetooth
